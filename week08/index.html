@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SF Crime Data Visualization</title>
+  <title>SF Crime Story</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -14,11 +14,10 @@
       --accent-hover: #2dd4bf;
       --border: rgba(255,255,255,0.08);
       --shadow: 0 10px 30px rgba(0,0,0,0.25);
-      --maxw: 1100px;
+      --maxw: 900px;
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -26,12 +25,7 @@
       font-family: Arial, Helvetica, sans-serif;
       background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
       color: var(--text);
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
+      line-height: 1.7;
     }
 
     .container {
@@ -42,9 +36,10 @@
     nav {
       position: sticky;
       top: 0;
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
+      z-index: 10;
     }
 
     .nav-inner {
@@ -65,110 +60,79 @@
     }
 
     .hero {
-      padding: 90px 0 60px;
+      padding: 72px 0 36px;
     }
 
     .hero h1 {
-      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-size: clamp(2.2rem, 5vw, 4rem);
       line-height: 1.05;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
     }
 
     .hero p {
-      max-width: 760px;
       color: var(--muted);
+      max-width: 760px;
       font-size: 1.08rem;
-      margin-bottom: 28px;
     }
 
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
+    article {
+      padding-bottom: 60px;
     }
 
-    .button {
-      display: inline-block;
-      padding: 12px 18px;
-      border-radius: 10px;
-      font-weight: 600;
-      transition: transform 0.2s ease, background 0.2s ease;
+    section.story-block {
+      margin: 42px 0;
     }
 
-    .button-primary {
-      background: var(--accent);
-      color: #06211f;
-    }
-
-    .button-primary:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-    }
-
-    .button-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .button-secondary:hover {
-      transform: translateY(-2px);
-    }
-
-    section {
-      padding: 34px 0 54px;
-    }
-
-    .section-title {
+    h2 {
+      margin-bottom: 10px;
       font-size: 1.7rem;
-      margin-bottom: 8px;
     }
 
-    .section-intro {
-      color: var(--muted);
-      margin-bottom: 26px;
-      max-width: 760px;
+    p {
+      margin: 14px 0;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
-    }
-
-    .card {
-      background: rgba(17, 24, 39, 0.9);
+    figure {
+      margin: 28px 0 44px;
+      background: rgba(17, 24, 39, 0.92);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 22px;
+      padding: 18px;
       box-shadow: var(--shadow);
-      transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
-    .card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(20, 184, 166, 0.45);
+    img, iframe {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      display: block;
+      background: white;
     }
 
-    .card h3 {
-      margin-top: 0;
-      margin-bottom: 8px;
+    .map-frame {
+      height: 520px;
     }
 
-    .card p {
+    .plotly-frame {
+      height: 650px;
+    }
+
+    figcaption {
+      margin-top: 14px;
       color: var(--muted);
-      margin-bottom: 16px;
+      font-size: 0.96rem;
     }
 
-    .card-link {
-      color: var(--accent);
-      font-weight: 600;
+    .references {
+      color: var(--muted);
+      font-size: 0.95rem;
+      padding-bottom: 60px;
     }
 
     footer {
       border-top: 1px solid var(--border);
       color: var(--muted);
-      padding: 28px 0 50px;
+      padding: 22px 0 40px;
       font-size: 0.95rem;
     }
 
@@ -177,77 +141,117 @@
         flex-direction: column;
         gap: 10px;
       }
+      .plotly-frame {
+        height: 520px;
+      }
+      .map-frame {
+        height: 420px;
+      }
     }
   </style>
 </head>
 <body>
   <nav>
     <div class="container nav-inner">
-      <div class="brand">SF Crime Data Project</div>
+      <div class="brand">SF Crime Story</div>
       <div class="nav-links">
-        <a href="#projects">Visualizations</a>
-        <a href="#about">About</a>
+        <a href="#story">Story</a>
+        <a href="#references">References</a>
       </div>
     </div>
   </nav>
 
   <header class="hero">
     <div class="container">
-      <h1>San Francisco Crime Through Data</h1>
+      <h1>When Crime Changes Shape in San Francisco</h1>
       <p>
-        This website presents visualizations based on San Francisco crime data.
-        It combines static figures, interactive charts, and maps to explore how crime changes across time and space.
+        This story uses San Francisco police incident data from 2003–2025 to examine
+        how recorded crime changes across time, place, and category. Rather than asking
+        only whether crime went up or down, the goal is to show that different patterns
+        can exist at the same time.
       </p>
-      <div class="hero-buttons">
-        <a class="button button-primary" href="#projects">Explore visualizations</a>
-        <a class="button button-secondary" href="#about">About the project</a>
-      </div>
     </div>
   </header>
 
-  <main>
-    <section id="projects">
-      <div class="container">
-        <h2 class="section-title">Visualization Gallery</h2>
-        <p class="section-intro">
-          These links will point to your exported figures from the earlier weeks.
+  <main class="container">
+    <article id="story">
+
+      <section class="story-block">
+        <h2>1. A citywide trend can hide a more complicated story</h2>
+        <p>
+          Looking at total incidents over time gives a useful overview, but it can also
+          flatten important differences. A city can appear more stable than it really is
+          if some crime categories are rising while others are falling.
         </p>
+      </section>
 
-       <div class="grid">
-        <article class="card">
-            <h3>Hourly Crime Patterns</h3>
-            <p>A static figure showing how crime varies across hours of the day.</p>
-            <a class="card-link" href="images/24h_crime_trends.png" target="_blank">Open figure →</a>
-        </article>
+      <figure>
+        <img src="images/static_chart.png" alt="Static crime chart">
+        <figcaption>
+          Figure 1. [Write a real caption here.] Explain what the reader sees and what
+          matters about the trend.
+        </figcaption>
+      </figure>
 
-        <article class="card">
-            <h3>Yearly Crime Trends</h3>
-            <p>An interactive Plotly chart showing how crime evolves over time by category.</p>
-            <a class="card-link" href="visualizations/yearly_crime_plotly.html" target="_blank">Open interactive chart →</a>
-        </article>
-
-        <article class="card">
-            <h3>Vehicle Theft Heatmap</h3>
-            <p>A time-based heatmap showing how vehicle theft is distributed across the city over time.</p>
-            <a class="card-link" href="visualizations/crime_heatmap_time.html" target="_blank">Open map →</a>
-        </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="container">
-        <h2 class="section-title">About This Project</h2>
-        <p class="section-intro">
-          This site was created for Week 7 of the course. It turns notebook visualizations into a public-facing website using GitHub Pages.
+      <section class="story-block">
+        <h2>2. Crime is concentrated, not evenly spread</h2>
+        <p>
+          The next step is to move from time to geography. Even if citywide totals look
+          moderate, the map can reveal whether incidents are concentrated in specific parts
+          of San Francisco.
         </p>
-      </div>
-    </section>
+      </section>
+
+      <figure>
+        <iframe class="map-frame" src="visualizations/map.html"></iframe>
+        <figcaption>
+          Figure 2. [Write a real caption here.] Point out the main hotspots and why that
+          matters for interpreting citywide averages.
+        </figcaption>
+      </figure>
+
+      <section class="story-block">
+        <h2>3. Different categories move differently</h2>
+        <p>
+          The final figure adds some reader freedom, but within a guided structure. The
+          story remains author-driven because the page explains what to look for and why
+          the comparison matters.
+        </p>
+        <p>
+          Try comparing categories across years. One of the most important lessons from
+          this dataset is that “crime” is not one single thing. Different categories can
+          follow very different paths.
+        </p>
+      </section>
+
+      <figure>
+        <iframe class="plotly-frame" src="visualizations/interactive_chart.html"></iframe>
+        <figcaption>
+          Figure 3. [Write a real caption here.] Tell the reader which categories are worth
+          comparing and what pattern they should notice.
+        </figcaption>
+      </figure>
+
+      <section class="story-block">
+        <h2>Conclusion</h2>
+        <p>
+          This dataset shows why a simple “crime is up” or “crime is down” framing is not
+          enough. Recorded incidents vary over time, cluster geographically, and differ by
+          category. Just as importantly, police data reflects reporting and enforcement
+          practices as well as underlying behavior, so patterns should be interpreted with care.
+        </p>
+      </section>
+
+      <section id="references" class="references">
+        <h2>References</h2>
+        <p>[Add any outside sources here if you use them.]</p>
+      </section>
+    </article>
   </main>
 
   <footer>
     <div class="container">
-      Built for Week 7 — Data Visualization on the Web.
+      Built for Week 8 — narrative visualization in magazine format.
     </div>
   </footer>
 </body>
