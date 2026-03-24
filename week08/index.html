@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SF Crime Data Visualization</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #14b8a6;
+      --accent-hover: #2dd4bf;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.25);
+      --maxw: 1100px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--maxw));
+      margin: 0 auto;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+    }
+
+    .brand {
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      color: var(--muted);
+    }
+
+    .hero {
+      padding: 90px 0 60px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      margin: 0 0 18px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: #06211f;
+    }
+
+    .button-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .button-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .button-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: 34px 0 54px;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      margin-bottom: 8px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      margin-bottom: 26px;
+      max-width: 760px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(20, 184, 166, 0.45);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .card-link {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 28px 0 50px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 700px) {
+      .nav-inner {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <div class="brand">SF Crime Data Project</div>
+      <div class="nav-links">
+        <a href="#projects">Visualizations</a>
+        <a href="#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1>San Francisco Crime Through Data</h1>
+      <p>
+        This website presents visualizations based on San Francisco crime data.
+        It combines static figures, interactive charts, and maps to explore how crime changes across time and space.
+      </p>
+      <div class="hero-buttons">
+        <a class="button button-primary" href="#projects">Explore visualizations</a>
+        <a class="button button-secondary" href="#about">About the project</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Visualization Gallery</h2>
+        <p class="section-intro">
+          These links will point to your exported figures from the earlier weeks.
+        </p>
+
+       <div class="grid">
+        <article class="card">
+            <h3>Hourly Crime Patterns</h3>
+            <p>A static figure showing how crime varies across hours of the day.</p>
+            <a class="card-link" href="images/24h_crime_trends.png" target="_blank">Open figure →</a>
+        </article>
+
+        <article class="card">
+            <h3>Yearly Crime Trends</h3>
+            <p>An interactive Plotly chart showing how crime evolves over time by category.</p>
+            <a class="card-link" href="visualizations/yearly_crime_plotly.html" target="_blank">Open interactive chart →</a>
+        </article>
+
+        <article class="card">
+            <h3>Vehicle Theft Heatmap</h3>
+            <p>A time-based heatmap showing how vehicle theft is distributed across the city over time.</p>
+            <a class="card-link" href="visualizations/crime_heatmap_time.html" target="_blank">Open map →</a>
+        </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About This Project</h2>
+        <p class="section-intro">
+          This site was created for Week 7 of the course. It turns notebook visualizations into a public-facing website using GitHub Pages.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Built for Week 7 — Data Visualization on the Web.
+    </div>
+  </footer>
+</body>
+</html>
